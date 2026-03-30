@@ -1,0 +1,1171 @@
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+.ag { font-family: 'Arial', sans-serif; background: #f4f2ee; min-height: 100vh; }
+
+.ag-topbar {
+  background: #1a2e44;
+  padding: 0 24px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid #c8972a;
+}
+
+.ag-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ag-logo-block {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.ag-logo-top {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.ag-logo-bottom {
+  font-size: 14px;
+  font-weight: 700;
+  color: #c8972a;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.ag-logo-sep {
+  width: 1px;
+  height: 28px;
+  background: #2e4a66;
+  margin: 0 4px;
+}
+
+.ag-logo-sub {
+  font-size: 11px;
+  color: #6b8aaa;
+  letter-spacing: 0.5px;
+}
+
+.ag-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ag-topbar-notif {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #2e4a66;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.ag-notif-dot {
+  width: 8px;
+  height: 8px;
+  background: #c8972a;
+  border-radius: 50%;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border: 1.5px solid #1a2e44;
+}
+
+.ag-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #c8972a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+
+.ag-layout {
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  min-height: calc(100vh - 58px);
+}
+
+.ag-sidebar {
+  background: #1a2e44;
+  padding: 0;
+}
+
+.ag-client-block {
+  padding: 18px 16px;
+  border-bottom: 1px solid #2e4a66;
+  background: #152438;
+}
+
+.ag-client-label {
+  font-size: 10px;
+  color: #6b8aaa;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.ag-client-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ag-client-site {
+  font-size: 11px;
+  color: #c8972a;
+  margin-top: 2px;
+}
+
+.ag-nav-group {
+  padding: 14px 16px 6px;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #3d5a78;
+  font-weight: 700;
+}
+
+.ag-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b8aaa;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  border-left: 3px solid transparent;
+  transition: all 0.15s;
+}
+
+.ag-nav-item:hover {
+  background: #1e3550;
+  color: #fff;
+}
+
+.ag-nav-item.active {
+  background: #1e3550;
+  color: #c8972a;
+  border-left: 3px solid #c8972a;
+}
+
+.ag-nav-badge {
+  margin-left: auto;
+  background: #c8972a;
+  color: #fff;
+  font-size: 9px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+.ag-main {
+  padding: 24px;
+  background: #f4f2ee;
+}
+
+.ag-page-header {
+  margin-bottom: 20px;
+  border-left: 4px solid #c8972a;
+  padding-left: 12px;
+}
+
+.ag-page-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a2e44;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 1.1;
+}
+
+.ag-page-sub {
+  font-size: 12px;
+  color: #7a8a9a;
+  margin-top: 3px;
+}
+
+.ag-track-card {
+  background: #1a2e44;
+  border-radius: 8px;
+  padding: 18px 20px;
+  margin-bottom: 18px;
+}
+
+.ag-track-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #6b8aaa;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.ag-live-pill {
+  background: #c8972a;
+  color: #fff;
+  font-size: 9px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.ag-steps {
+  display: flex;
+  align-items: flex-start;
+}
+
+.ag-step {
+  flex: 1;
+  text-align: center;
+  position: relative;
+}
+
+.ag-step-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #2e4a66;
+  border: 2px solid #3d5a78;
+  margin: 0 auto 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: #6b8aaa;
+  font-weight: 700;
+  position: relative;
+  z-index: 2;
+}
+
+.ag-step.done .ag-step-circle {
+  background: #1e3a20;
+  border-color: #3bba5a;
+}
+
+.ag-step.active .ag-step-circle {
+  background: #c8972a;
+  border-color: #c8972a;
+  color: #fff;
+}
+
+.ag-step-connector {
+  position: absolute;
+  top: 17px;
+  left: calc(50% + 17px);
+  right: calc(-50% + 17px);
+  height: 2px;
+  background: #3d5a78;
+  z-index: 1;
+}
+
+.ag-step.done .ag-step-connector {
+  background: #3bba5a;
+}
+
+.ag-step:last-child .ag-step-connector { display: none; }
+
+.ag-step-label {
+  font-size: 10px;
+  color: #6b8aaa;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ag-step.done .ag-step-label { color: #3bba5a; }
+.ag-step.active .ag-step-label { color: #c8972a; }
+
+.ag-grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.ag-grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.ag-card {
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e0dbd0;
+  padding: 16px;
+}
+
+.ag-card-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f4f2ee;
+}
+
+.ag-card-icon {
+  width: 28px;
+  height: 28px;
+  background: #1a2e44;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ag-card-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1a2e44;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.ag-health-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ag-health-ring {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: 4px solid #3bba5a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ag-health-num {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a2e44;
+  line-height: 1;
+}
+
+.ag-health-denom {
+  font-size: 10px;
+  color: #aaa;
+}
+
+.ag-health-bars {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ag-hbar-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ag-hbar-label {
+  font-size: 10px;
+  color: #7a8a9a;
+  width: 58px;
+  flex-shrink: 0;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.ag-hbar-track {
+  flex: 1;
+  height: 5px;
+  background: #f0ede6;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.ag-hbar-fill {
+  height: 100%;
+  border-radius: 3px;
+}
+
+.ag-actions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ag-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1.5px solid #e0dbd0;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #f9f7f3;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1a2e44;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: Arial, sans-serif;
+  transition: all 0.15s;
+}
+
+.ag-action-btn:hover {
+  border-color: #c8972a;
+  background: #fdf8f0;
+}
+
+.ag-action-icon {
+  width: 30px;
+  height: 30px;
+  background: #1a2e44;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ag-notifs {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.ag-notif-row {
+  display: flex;
+  gap: 8px;
+  padding: 8px 10px;
+  background: #f9f7f3;
+  border-radius: 6px;
+  border-left: 3px solid #c8972a;
+}
+
+.ag-notif-row.blue { border-left-color: #1a2e44; }
+.ag-notif-row.green { border-left-color: #3bba5a; }
+
+.ag-notif-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #c8972a;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.ag-notif-row.blue .ag-notif-dot { background: #1a2e44; }
+.ag-notif-row.green .ag-notif-dot { background: #3bba5a; }
+
+.ag-notif-text {
+  font-size: 11px;
+  color: #1a2e44;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+.ag-notif-time {
+  font-size: 10px;
+  color: #aaa;
+  margin-top: 2px;
+}
+
+.ag-section-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #1a2e44;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ag-section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e0dbd0;
+}
+
+.ag-mod-card {
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e0dbd0;
+  border-top: 3px solid #1a2e44;
+  padding: 14px;
+  cursor: pointer;
+  transition: border-top-color 0.15s;
+}
+
+.ag-mod-card:hover {
+  border-top-color: #c8972a;
+}
+
+.ag-mod-icon-wrap {
+  width: 36px;
+  height: 36px;
+  background: #1a2e44;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.ag-mod-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1a2e44;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.ag-mod-desc {
+  font-size: 11px;
+  color: #7a8a9a;
+  line-height: 1.4;
+}
+
+.ag-mod-tag {
+  display: inline-block;
+  margin-top: 8px;
+  background: #f4f2ee;
+  color: #1a2e44;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 1px solid #e0dbd0;
+}
+
+.ag-mod-tag.orange {
+  background: #fdf3e3;
+  color: #c8972a;
+  border-color: #f0d8a0;
+}
+
+.ag-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.ag-stat {
+  background: #1a2e44;
+  border-radius: 8px;
+  padding: 14px 12px;
+  text-align: center;
+}
+
+.ag-stat-label {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #6b8aaa;
+  margin-bottom: 6px;
+}
+
+.ag-stat-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: #c8972a;
+  line-height: 1;
+  margin-bottom: 3px;
+}
+
+.ag-stat-sub {
+  font-size: 10px;
+  color: #3d5a78;
+}
+
+.ag-calendar-strip {
+  display: flex;
+  gap: 8px;
+  padding-bottom: 4px;
+  overflow-x: auto;
+}
+
+.ag-cal-item {
+  flex-shrink: 0;
+  background: #f9f7f3;
+  border: 1.5px solid #e0dbd0;
+  border-radius: 6px;
+  padding: 10px 14px;
+  text-align: center;
+  min-width: 80px;
+}
+
+.ag-cal-item.hot {
+  background: #1a2e44;
+  border-color: #c8972a;
+}
+
+.ag-cal-month {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #aaa;
+}
+
+.ag-cal-item.hot .ag-cal-month { color: #6b8aaa; }
+
+.ag-cal-day {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a2e44;
+  line-height: 1.1;
+}
+
+.ag-cal-item.hot .ag-cal-day { color: #c8972a; }
+
+.ag-cal-event {
+  font-size: 10px;
+  color: #7a8a9a;
+  margin-top: 3px;
+  line-height: 1.2;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.ag-cal-item.hot .ag-cal-event { color: #c8972a; }
+
+.ag-guarantee-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.ag-g-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: #f9f7f3;
+  border-radius: 6px;
+  border-left: 3px solid #3bba5a;
+}
+
+.ag-g-row.warn { border-left-color: #c8972a; }
+
+.ag-g-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1a2e44;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.ag-g-date {
+  font-size: 10px;
+  color: #aaa;
+  margin-top: 2px;
+}
+
+.ag-g-badge {
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 3px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ag-g-ok { background: #e8f5ec; color: #3bba5a; }
+.ag-g-warn { background: #fdf3e3; color: #c8972a; }
+
+.ag-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.ag-sub-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.ag-sub-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 0;
+  border-bottom: 1px solid #f0ede6;
+}
+
+.ag-sub-key {
+  font-size: 11px;
+  color: #7a8a9a;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ag-sub-val {
+  font-size: 12px;
+  color: #1a2e44;
+  font-weight: 700;
+}
+
+.ag-gold-tag {
+  display: inline-block;
+  background: #c8972a;
+  color: #fff;
+  font-size: 9px;
+  padding: 1px 7px;
+  border-radius: 3px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-left: 6px;
+}
+
+.ag-parrainage {
+  background: #1a2e44;
+  border-radius: 6px;
+  padding: 12px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.ag-parr-label {
+  font-size: 9px;
+  color: #6b8aaa;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.ag-parr-code {
+  font-size: 20px;
+  font-weight: 700;
+  color: #c8972a;
+  letter-spacing: 4px;
+}
+
+.ag-parr-sub {
+  font-size: 10px;
+  color: #3d5a78;
+  margin-top: 4px;
+}
+
+.ag-parr-stats {
+  display: flex;
+  gap: 8px;
+}
+
+.ag-parr-stat {
+  flex: 1;
+  background: #f9f7f3;
+  border-radius: 6px;
+  padding: 8px;
+  text-align: center;
+  border: 1px solid #e0dbd0;
+}
+
+.ag-parr-num {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a2e44;
+  line-height: 1;
+}
+
+.ag-parr-num.gold { color: #c8972a; }
+
+.ag-parr-lbl {
+  font-size: 10px;
+  color: #aaa;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-top: 3px;
+}
+</style>
+
+<div class="ag">
+
+  <div class="ag-topbar">
+    <div class="ag-logo">
+      <div class="ag-logo-block">
+        <div class="ag-logo-top">Atelier</div>
+        <div class="ag-logo-bottom">Gambetta</div>
+      </div>
+      <div class="ag-logo-sep"></div>
+      <div class="ag-logo-sub">Espace client</div>
+    </div>
+    <div class="ag-topbar-right">
+      <div class="ag-topbar-notif">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" stroke="#6b8aaa" stroke-width="2" stroke-linecap="round"/></svg>
+        <div class="ag-notif-dot"></div>
+      </div>
+      <div class="ag-avatar">BC</div>
+    </div>
+  </div>
+
+  <div class="ag-layout">
+
+    <div class="ag-sidebar">
+      <div class="ag-client-block">
+        <div class="ag-client-label">Client</div>
+        <div class="ag-client-name">Boulangerie Crespin</div>
+        <div class="ag-client-site">75011 Paris — 2 sites</div>
+      </div>
+
+      <div class="ag-nav-group">Navigation</div>
+      <div class="ag-nav-item active">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1" stroke="#c8972a" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1" stroke="#c8972a" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1" stroke="#c8972a" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1" stroke="#c8972a" stroke-width="2"/></svg>
+        Pilotage
+      </div>
+      <div class="ag-nav-item">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" stroke="#6b8aaa" stroke-width="2"/></svg>
+        Coffre-fort
+      </div>
+      <div class="ag-nav-item">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" stroke="#6b8aaa" stroke-width="2" stroke-linecap="round"/></svg>
+        SAV &amp; Maintenance
+        <span class="ag-nav-badge">1</span>
+      </div>
+      <div class="ag-nav-item">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0" stroke="#6b8aaa" stroke-width="2" stroke-linecap="round"/></svg>
+        Merchandising
+      </div>
+      <div class="ag-nav-item">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#6b8aaa" stroke-width="2" stroke-linecap="round"/></svg>
+        Abonnement
+      </div>
+
+      <div class="ag-nav-group" style="margin-top:16px;">Compte</div>
+      <div class="ag-nav-item">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z" stroke="#6b8aaa" stroke-width="2" stroke-linecap="round"/></svg>
+        Profil
+      </div>
+      <div class="ag-nav-item">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" stroke="#6b8aaa" stroke-width="2"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" stroke="#6b8aaa" stroke-width="2"/></svg>
+        Paramètres
+      </div>
+    </div>
+
+    <div class="ag-main">
+
+      <div class="ag-page-header">
+        <div class="ag-page-title">Bonjour, Boulangerie Crespin</div>
+        <div class="ag-page-sub">Connexion aujourd'hui à 09h14 · Site actif : Gambetta (75020)</div>
+      </div>
+
+      <div class="ag-track-card">
+        <div class="ag-track-label">
+          <span class="ag-live-pill">Live</span>
+          Live Track — Commande #2024-1147
+        </div>
+        <div class="ag-steps">
+          <div class="ag-step done">
+            <div class="ag-step-connector"></div>
+            <div class="ag-step-circle">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="#3bba5a" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </div>
+            <div class="ag-step-label">Devis signé</div>
+          </div>
+          <div class="ag-step done">
+            <div class="ag-step-connector"></div>
+            <div class="ag-step-circle">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="#3bba5a" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </div>
+            <div class="ag-step-label">BAT validé</div>
+          </div>
+          <div class="ag-step active">
+            <div class="ag-step-connector"></div>
+            <div class="ag-step-circle">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="#fff"/></svg>
+            </div>
+            <div class="ag-step-label">En fabrication</div>
+          </div>
+          <div class="ag-step">
+            <div class="ag-step-circle" style="font-size:12px;font-weight:700;">4</div>
+            <div class="ag-step-label">Pose programmée</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ag-grid3">
+
+        <div class="ag-card">
+          <div class="ag-card-head">
+            <div class="ag-card-icon"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#c8972a" stroke-width="2"/></svg></div>
+            <div class="ag-card-title">Santé enseigne</div>
+          </div>
+          <div class="ag-health-wrap">
+            <div class="ag-health-ring">
+              <div class="ag-health-num">92</div>
+              <div class="ag-health-denom">/100</div>
+            </div>
+            <div class="ag-health-bars">
+              <div class="ag-hbar-row">
+                <div class="ag-hbar-label">Électrique</div>
+                <div class="ag-hbar-track"><div class="ag-hbar-fill" style="width:95%;background:#3bba5a;"></div></div>
+              </div>
+              <div class="ag-hbar-row">
+                <div class="ag-hbar-label">LED</div>
+                <div class="ag-hbar-track"><div class="ag-hbar-fill" style="width:88%;background:#3bba5a;"></div></div>
+              </div>
+              <div class="ag-hbar-row">
+                <div class="ag-hbar-label">Store</div>
+                <div class="ag-hbar-track"><div class="ag-hbar-fill" style="width:72%;background:#c8972a;"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ag-card">
+          <div class="ag-card-head">
+            <div class="ag-card-icon"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#c8972a" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="ag-card-title">Actions rapides</div>
+          </div>
+          <div class="ag-actions-list">
+            <div class="ag-action-btn">
+              <div class="ag-action-icon"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="#c8972a" stroke-width="2"/><line x1="12" y1="9" x2="12" y2="13" stroke="#c8972a" stroke-width="2"/></svg></div>
+              Signaler une panne
+            </div>
+            <div class="ag-action-btn">
+              <div class="ag-action-icon"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#c8972a" stroke-width="2"/><line x1="3" y1="9" x2="21" y2="9" stroke="#c8972a" stroke-width="2"/><line x1="3" y1="15" x2="21" y2="15" stroke="#c8972a" stroke-width="2"/></svg></div>
+              Commander vitrophanie
+            </div>
+            <div class="ag-action-btn">
+              <div class="ag-action-icon"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="#c8972a" stroke-width="2"/><polyline points="14 2 14 8 20 8" stroke="#c8972a" stroke-width="2"/><line x1="12" y1="18" x2="12" y2="12" stroke="#c8972a" stroke-width="2"/><polyline points="9 15 12 18 15 15" stroke="#c8972a" stroke-width="2"/></svg></div>
+              Télécharger ma facture
+            </div>
+          </div>
+        </div>
+
+        <div class="ag-card">
+          <div class="ag-card-head">
+            <div class="ag-card-icon"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3" stroke="#c8972a" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="ag-card-title">Notifications</div>
+          </div>
+          <div class="ag-notifs">
+            <div class="ag-notif-row">
+              <div class="ag-notif-dot"></div>
+              <div>
+                <div class="ag-notif-text">Enseigne en fabrication — livraison 8 janv.</div>
+                <div class="ag-notif-time">Il y a 2h</div>
+              </div>
+            </div>
+            <div class="ag-notif-row blue">
+              <div class="ag-notif-dot"></div>
+              <div>
+                <div class="ag-notif-text">Technicien Romain prévu le 15 jan. 9h–12h</div>
+                <div class="ag-notif-time">Hier</div>
+              </div>
+            </div>
+            <div class="ag-notif-row green">
+              <div class="ag-notif-dot"></div>
+              <div>
+                <div class="ag-notif-text">Garantie pièces renouvelée — mars 2027</div>
+                <div class="ag-notif-time">3 janv.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="ag-section-title">Modules</div>
+
+      <div class="ag-grid3">
+        <div class="ag-mod-card">
+          <div class="ag-mod-icon-wrap"><svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" stroke="#c8972a" stroke-width="2"/></svg></div>
+          <div class="ag-mod-name">Coffre-fort numérique</div>
+          <div class="ag-mod-desc">Logos HD, chartes graphiques, plans, factures</div>
+          <div class="ag-mod-tag">12 fichiers</div>
+        </div>
+        <div class="ag-mod-card">
+          <div class="ag-mod-icon-wrap"><svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" stroke="#c8972a" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <div class="ag-mod-name">SAV & Maintenance</div>
+          <div class="ag-mod-desc">Diagnostic, suivi d'intervention, garantie pièces</div>
+          <div class="ag-mod-tag orange">1 ticket ouvert</div>
+        </div>
+        <div class="ag-mod-card">
+          <div class="ag-mod-icon-wrap"><svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0" stroke="#c8972a" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <div class="ag-mod-name">Merchandising</div>
+          <div class="ag-mod-desc">Calendrier marketing, configurateur vitrophanie</div>
+          <div class="ag-mod-tag orange">Soldes — J-12</div>
+        </div>
+      </div>
+
+      <div class="ag-grid2">
+
+        <div class="ag-card">
+          <div class="ag-card-head">
+            <div class="ag-card-icon"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#c8972a" stroke-width="2"/><line x1="16" y1="2" x2="16" y2="6" stroke="#c8972a" stroke-width="2"/><line x1="8" y1="2" x2="8" y2="6" stroke="#c8972a" stroke-width="2"/><line x1="3" y1="10" x2="21" y2="10" stroke="#c8972a" stroke-width="2"/></svg></div>
+            <div class="ag-card-title">Calendrier marketing</div>
+          </div>
+          <div class="ag-calendar-strip">
+            <div class="ag-cal-item hot">
+              <div class="ag-cal-month">Jan</div>
+              <div class="ag-cal-day">15</div>
+              <div class="ag-cal-event">Soldes d'hiver</div>
+            </div>
+            <div class="ag-cal-item">
+              <div class="ag-cal-month">Fév</div>
+              <div class="ag-cal-day">10</div>
+              <div class="ag-cal-event">Saint-Valentin</div>
+            </div>
+            <div class="ag-cal-item">
+              <div class="ag-cal-month">Mar</div>
+              <div class="ag-cal-day">22</div>
+              <div class="ag-cal-event">Semaine du goût</div>
+            </div>
+            <div class="ag-cal-item">
+              <div class="ag-cal-month">Mai</div>
+              <div class="ag-cal-day">26</div>
+              <div class="ag-cal-event">Fête des mères</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ag-card">
+          <div class="ag-card-head">
+            <div class="ag-card-icon"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#c8972a" stroke-width="2"/></svg></div>
+            <div class="ag-card-title">Compteurs de garantie</div>
+          </div>
+          <div class="ag-guarantee-list">
+            <div class="ag-g-row">
+              <div>
+                <div class="ag-g-name">Enseigne LED lumineuse</div>
+                <div class="ag-g-date">Expire : 14 mars 2027</div>
+              </div>
+              <div class="ag-g-badge ag-g-ok">Valide</div>
+            </div>
+            <div class="ag-g-row warn">
+              <div>
+                <div class="ag-g-name">Store banne façade</div>
+                <div class="ag-g-date">Expire : 30 juin 2025</div>
+              </div>
+              <div class="ag-g-badge ag-g-warn">À renouveler</div>
+            </div>
+            <div class="ag-g-row">
+              <div>
+                <div class="ag-g-name">Vitrophanie soldes 2023</div>
+                <div class="ag-g-date">Expire : 01 fév. 2026</div>
+              </div>
+              <div class="ag-g-badge ag-g-ok">Valide</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="ag-stat-grid">
+        <div class="ag-stat">
+          <div class="ag-stat-label">Interventions réalisées</div>
+          <div class="ag-stat-value">14</div>
+          <div class="ag-stat-sub">depuis 2021</div>
+        </div>
+        <div class="ag-stat">
+          <div class="ag-stat-label">Délai moyen SAV</div>
+          <div class="ag-stat-value">48h</div>
+          <div class="ag-stat-sub">objectif contrat : 72h</div>
+        </div>
+        <div class="ag-stat">
+          <div class="ag-stat-label">Crédits parrainage</div>
+          <div class="ag-stat-value">240€</div>
+          <div class="ag-stat-sub">disponibles à utiliser</div>
+        </div>
+      </div>
+
+      <div class="ag-bottom-grid">
+
+        <div class="ag-card">
+          <div class="ag-card-head">
+            <div class="ag-card-icon"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#c8972a" stroke-width="2"/></svg></div>
+            <div class="ag-card-title">Abonnement maintenance</div>
+          </div>
+          <div class="ag-sub-table">
+            <div class="ag-sub-row">
+              <div class="ag-sub-key">Formule</div>
+              <div class="ag-sub-val">Pack Sérénité <span class="ag-gold-tag">Actif</span></div>
+            </div>
+            <div class="ag-sub-row">
+              <div class="ag-sub-key">Visites / an</div>
+              <div class="ag-sub-val">2 incluses (1 restante)</div>
+            </div>
+            <div class="ag-sub-row">
+              <div class="ag-sub-key">Intervention garanti</div>
+              <div class="ag-sub-val">72h</div>
+            </div>
+            <div class="ag-sub-row">
+              <div class="ag-sub-key">Renouvellement</div>
+              <div class="ag-sub-val">01 avril 2025</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ag-card">
+          <div class="ag-card-head">
+            <div class="ag-card-icon"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="#c8972a" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="ag-card-title">Programme parrainage</div>
+          </div>
+          <div class="ag-parrainage">
+            <div class="ag-parr-label">Mon code parrainage</div>
+            <div class="ag-parr-code">CRESPIN-75</div>
+            <div class="ag-parr-sub">À partager à vos confrères commerçants</div>
+          </div>
+          <div class="ag-parr-stats">
+            <div class="ag-parr-stat">
+              <div class="ag-parr-num">3</div>
+              <div class="ag-parr-lbl">Parrainages</div>
+            </div>
+            <div class="ag-parr-stat">
+              <div class="ag-parr-num gold">240€</div>
+              <div class="ag-parr-lbl">Crédits gagnés</div>
+            </div>
+            <div class="ag-parr-stat">
+              <div class="ag-parr-num">0€</div>
+              <div class="ag-parr-lbl">Utilisés</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
