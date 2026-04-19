@@ -1,0 +1,857 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200;300;400;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#224761;--navy-dark:#172f42;--navy-mid:#2d5a7a;
+  --gold:#E8B130;--gold-light:#FFF3CC;--gold-dim:#f5d78a;
+  --red:#C83E3F;--red-light:#fdf0f0;
+  --green:#1db368;--green-light:#e8f7ef;
+  --gray-50:#F7F7F5;--gray-100:#EFEFEC;--gray-200:#E0DED8;
+  --gray-400:#A8A5A0;--gray-600:#6B6762;--gray-800:#2C2B28;
+  --white:#fff;
+  --font:'Readex Pro',sans-serif;
+  --r-sm:6px;--r-md:10px;--r-lg:14px;
+  --sh-sm:0 1px 3px rgba(34,71,97,.06);
+  --sh-md:0 4px 16px rgba(34,71,97,.08);
+  --sh-lg:0 8px 32px rgba(34,71,97,.12);
+  --tr:.18s cubic-bezier(.4,0,.2,1);
+}
+body{font-family:var(--font);background:var(--gray-50);color:var(--gray-800);}
+
+/* TOPBAR */
+.topbar{background:var(--navy);height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:2.5px solid var(--gold);position:sticky;top:0;z-index:100;}
+.logo-wrap{display:flex;align-items:center;gap:14px;}
+.logo-sep{width:1px;height:32px;background:rgba(255,255,255,.15);}
+.logo-sub{font-size:11px;font-weight:300;color:rgba(255,255,255,.4);letter-spacing:1.5px;}
+.tb-right{display:flex;align-items:center;gap:10px;}
+.tb-btn{position:relative;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--tr);}
+.tb-btn:hover{background:rgba(255,255,255,.13);}
+.tb-badge-notif{position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:var(--gold);color:var(--navy);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid var(--navy);}
+.tb-av{width:36px;height:36px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--navy);border:2px solid rgba(255,255,255,.15);}
+
+/* SHELL */
+.shell{display:flex;min-height:calc(100vh - 62px);}
+
+/* SIDEBAR */
+.sidebar{width:220px;flex-shrink:0;background:var(--navy-dark);display:flex;flex-direction:column;padding-bottom:24px;}
+.client-card{margin:16px 14px;padding:14px;background:rgba(232,177,48,.08);border-radius:var(--r-md);border:1px solid rgba(232,177,48,.15);}
+.cc-tag{font-size:9px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px;opacity:.8;}
+.cc-name{font-size:13px;font-weight:600;color:var(--white);line-height:1.2;margin-bottom:3px;}
+.cc-loc{font-size:11px;font-weight:300;color:rgba(255,255,255,.4);display:flex;align-items:center;gap:4px;}
+.nav-section{padding:18px 14px 6px;font-size:9px;font-weight:600;color:rgba(255,255,255,.2);text-transform:uppercase;letter-spacing:2px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 14px;font-size:12px;font-weight:400;color:rgba(255,255,255,.4);cursor:pointer;border-left:2px solid transparent;transition:var(--tr);margin:1px 0;}
+.nav-item:hover{color:rgba(255,255,255,.75);background:rgba(255,255,255,.04);}
+.nav-item.active{color:var(--gold);background:rgba(232,177,48,.08);border-left:2px solid var(--gold);font-weight:600;}
+.nav-badge{margin-left:auto;background:var(--red);color:var(--white);font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;}
+.sidebar-footer{margin:auto 14px 0;padding:12px;background:rgba(255,255,255,.04);border-radius:var(--r-md);border:1px dashed rgba(255,255,255,.08);}
+.sf-label{font-size:9px;font-weight:600;color:rgba(232,177,48,.6);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;}
+.sf-text{font-size:10px;font-weight:300;color:rgba(255,255,255,.3);line-height:1.4;}
+
+/* MAIN */
+.main{flex:1;padding:24px 26px;overflow-x:hidden;}
+.page{display:none;}
+.page.active{display:block;}
+
+/* PAGE HEADER */
+.ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;}
+.ph-left{}
+.ph-greeting{font-size:10px;font-weight:300;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+.ph-title{font-size:22px;font-weight:700;color:var(--navy);line-height:1.1;}
+.ph-right{font-size:11px;font-weight:300;color:var(--gray-400);text-align:right;margin-top:4px;}
+
+/* SECTION LABEL */
+.sl{display:flex;align-items:center;gap:10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--navy);margin-bottom:12px;margin-top:4px;}
+.sl::after{content:'';flex:1;height:1px;background:var(--gray-200);}
+.sl-tag{font-size:9px;padding:2px 8px;border-radius:10px;font-weight:700;background:var(--gold-light);color:#b8840a;}
+
+/* CARD */
+.card{background:var(--white);border-radius:var(--r-lg);border:1px solid var(--gray-200);box-shadow:var(--sh-sm);overflow:hidden;margin-bottom:16px;}
+.card-head{display:flex;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid var(--gray-100);}
+.ch-icon{width:30px;height:30px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.chi-n{background:var(--navy);}
+.chi-g{background:var(--gold);}
+.chi-r{background:var(--red);}
+.ch-title{font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:1px;}
+.ch-meta{margin-left:auto;font-size:10px;font-weight:300;color:var(--gray-400);}
+.card-body{padding:14px 16px;}
+
+/* GRID */
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:16px;}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px;}
+
+/* BADGE */
+.badge{font-size:9px;padding:3px 9px;border-radius:20px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;}
+.b-orange{background:#FFF3CC;color:#b8840a;}
+.b-green{background:var(--green-light);color:#0f8047;}
+.b-red{background:var(--red-light);color:var(--red);}
+.b-navy{background:#e8f0f7;color:var(--navy);}
+.b-gray{background:var(--gray-100);color:var(--gray-600);}
+
+/* TRACK */
+.track-card{background:var(--navy);border-radius:var(--r-lg);padding:18px 22px;margin-bottom:18px;box-shadow:var(--sh-md);}
+.tc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.tc-label{font-size:9px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:8px;font-weight:600;}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(29,179,104,.2);}
+.live-pill{background:var(--gold);color:var(--navy);font-size:9px;padding:3px 10px;border-radius:10px;font-weight:700;}
+.tc-ref{font-size:11px;font-weight:300;color:rgba(255,255,255,.4);}
+.steps{display:flex;align-items:flex-start;}
+.step{flex:1;text-align:center;position:relative;}
+.step-conn{position:absolute;top:18px;left:calc(50% + 19px);right:calc(-50% + 19px);height:2px;background:rgba(255,255,255,.1);z-index:1;}
+.step.done .step-conn{background:var(--green);}
+.step:last-child .step-conn{display:none;}
+.step-circle{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:12px;color:rgba(255,255,255,.2);font-weight:600;position:relative;z-index:2;}
+.step.done .step-circle{background:rgba(29,179,104,.15);border-color:var(--green);}
+.step.active .step-circle{background:var(--gold);border-color:var(--gold);color:var(--navy);}
+.step-label{font-size:9px;color:rgba(255,255,255,.3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+.step.done .step-label{color:var(--green);}
+.step.active .step-label{color:var(--gold);font-weight:700;}
+
+/* QUICK ACTIONS */
+.qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;}
+.qa-card{border-radius:var(--r-lg);padding:16px;display:flex;align-items:flex-start;gap:14px;cursor:pointer;transition:var(--tr);box-shadow:var(--sh-sm);}
+.qa-p{background:var(--navy);border:1.5px solid var(--navy-mid);}
+.qa-p:hover{background:var(--navy-mid);transform:translateY(-1px);}
+.qa-s{background:var(--white);border:1.5px solid var(--gray-200);}
+.qa-s:hover{border-color:var(--gold);transform:translateY(-1px);}
+.qa-icon{width:44px;height:44px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.qai-g{background:var(--gold);}
+.qai-l{background:var(--gray-100);}
+.qa-lp{font-size:13px;font-weight:700;color:var(--white);margin-bottom:4px;}
+.qa-ls{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:4px;}
+.qa-dp{font-size:11px;font-weight:300;color:rgba(255,255,255,.5);line-height:1.45;}
+.qa-ds{font-size:11px;font-weight:300;color:var(--gray-600);line-height:1.45;}
+
+/* NOTIF DRAWER */
+.nd{background:var(--white);border-radius:var(--r-lg);border:1px solid var(--gray-200);box-shadow:var(--sh-lg);overflow:hidden;margin-bottom:18px;}
+.nd-head{background:var(--navy);padding:13px 18px;display:flex;align-items:center;justify-content:space-between;}
+.nd-title{font-size:11px;font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:1.5px;display:flex;align-items:center;gap:8px;}
+.nd-cnt{background:var(--gold);color:var(--navy);font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;}
+.nd-close{font-size:11px;font-weight:600;color:rgba(255,255,255,.4);cursor:pointer;}
+.nd-close:hover{color:var(--gold);}
+.nd-item{display:flex;align-items:flex-start;gap:12px;padding:13px 18px;border-bottom:1px solid var(--gray-100);cursor:pointer;transition:var(--tr);}
+.nd-item:last-child{border-bottom:none;}
+.nd-item:hover{background:var(--gray-50);}
+.nd-item.unread{background:#fffdf5;}
+.nd-ico{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ndi-g{background:var(--gold-light);}
+.ndi-n{background:#e8f0f7;}
+.ndi-gr{background:var(--green-light);}
+.nd-body{flex:1;}
+.nd-t{font-size:13px;font-weight:600;color:var(--gray-800);margin-bottom:2px;}
+.nd-d{font-size:11px;font-weight:300;color:var(--gray-600);line-height:1.4;}
+.nd-time{font-size:10px;color:var(--gray-400);margin-top:4px;}
+.nd-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);margin-top:5px;flex-shrink:0;}
+
+/* TICKET LIST (full page) */
+.ticket-full{display:flex;flex-direction:column;gap:10px;}
+.ticket-card{background:var(--white);border-radius:var(--r-lg);border:1px solid var(--gray-200);box-shadow:var(--sh-sm);overflow:hidden;cursor:pointer;transition:var(--tr);}
+.ticket-card:hover{box-shadow:var(--sh-md);transform:translateY(-1px);}
+.tc-head{display:flex;align-items:center;gap:12px;padding:14px 16px;}
+.tc-stripe{width:4px;align-self:stretch;border-radius:2px;flex-shrink:0;}
+.ts-orange{background:var(--gold);}
+.ts-green{background:var(--green);}
+.tc-info{flex:1;}
+.tc-num{font-size:10px;color:var(--gray-400);font-weight:600;font-family:monospace;margin-bottom:3px;}
+.tc-title{font-size:13px;font-weight:600;color:var(--gray-800);margin-bottom:4px;}
+.tc-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.tc-tag{font-size:10px;color:var(--gray-600);font-weight:300;}
+.tc-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;}
+
+/* SAV DETAIL */
+.sav-detail{background:var(--white);border-radius:var(--r-lg);border:1px solid var(--gray-200);box-shadow:var(--sh-sm);overflow:hidden;}
+.sd-head{background:var(--navy);padding:16px 20px;}
+.sd-num{font-size:10px;color:rgba(255,255,255,.4);font-weight:600;font-family:monospace;margin-bottom:4px;}
+.sd-title{font-size:16px;font-weight:700;color:var(--white);margin-bottom:8px;}
+.sd-badges{display:flex;gap:6px;}
+.sd-body{padding:18px 20px;}
+.sd-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.sd-block{background:var(--gray-50);border-radius:var(--r-sm);padding:12px;}
+.sd-lbl{font-size:9px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+.sd-val{font-size:13px;font-weight:600;color:var(--gray-800);line-height:1.3;}
+.sd-sub{font-size:11px;font-weight:300;color:var(--gray-600);margin-top:2px;}
+
+.geo-btn{display:flex;align-items:center;gap:8px;padding:11px 14px;background:var(--navy);border-radius:var(--r-sm);font-size:11px;font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:.5px;cursor:pointer;border:none;font-family:var(--font);width:100%;margin-top:10px;transition:var(--tr);}
+.geo-btn:hover{background:var(--navy-mid);}
+.geo-live{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(29,179,104,.25);}
+.sign-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 14px;background:var(--white);border-radius:var(--r-sm);border:1.5px solid var(--gray-200);font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;cursor:pointer;font-family:var(--font);width:100%;margin-top:8px;transition:var(--tr);}
+.sign-btn:hover{border-color:var(--gold);}
+
+/* DIAG STEPS */
+.diag-steps{display:flex;gap:4px;margin:14px 0 4px;}
+.ds{flex:1;height:4px;border-radius:2px;background:var(--gray-200);}
+.ds.done{background:var(--green);}
+.ds.active{background:var(--gold);}
+
+/* COFFRE-FORT */
+.cf-tabs{display:flex;gap:0;border-bottom:1px solid var(--gray-200);margin-bottom:16px;}
+.cf-tab{padding:10px 16px;font-size:12px;font-weight:600;color:var(--gray-400);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;text-transform:uppercase;letter-spacing:.5px;transition:var(--tr);}
+.cf-tab:hover{color:var(--navy);}
+.cf-tab.active{color:var(--navy);border-bottom-color:var(--gold);}
+
+.cf-search{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--gray-50);border-radius:var(--r-md);border:1.5px solid var(--gray-200);margin-bottom:14px;transition:var(--tr);}
+.cf-search:focus-within{border-color:var(--gold);background:var(--white);}
+.cf-search input{border:none;background:transparent;font-family:var(--font);font-size:13px;color:var(--gray-800);flex:1;outline:none;}
+.cf-search input::placeholder{color:var(--gray-400);}
+
+.doc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+.doc-card{background:var(--white);border-radius:var(--r-md);border:1.5px solid var(--gray-200);padding:14px;cursor:pointer;transition:var(--tr);display:flex;flex-direction:column;gap:10px;}
+.doc-card:hover{border-color:var(--gold);transform:translateY(-1px);box-shadow:var(--sh-md);}
+.dc-ico{width:44px;height:44px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;}
+.dc-ico-pdf{background:#fdf0f0;}
+.dc-ico-img{background:#e8f0f7;}
+.dc-ico-doc{background:var(--gold-light);}
+.dc-name{font-size:12px;font-weight:600;color:var(--gray-800);line-height:1.3;}
+.dc-meta{font-size:10px;font-weight:300;color:var(--gray-400);}
+.dc-foot{display:flex;align-items:center;justify-content:space-between;}
+.dc-size{font-size:10px;color:var(--gray-400);}
+.dc-dl{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;}
+.dc-tag{font-size:9px;padding:2px 8px;border-radius:10px;font-weight:700;background:var(--gray-100);color:var(--gray-600);}
+
+/* VITROPHANIE */
+.vitro-steps{display:flex;align-items:center;gap:0;margin-bottom:22px;}
+.vs-item{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.5px;}
+.vs-item.active{color:var(--navy);}
+.vs-item.done{color:var(--green);}
+.vs-num{width:24px;height:24px;border-radius:50%;background:var(--gray-200);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--gray-600);}
+.vs-item.active .vs-num{background:var(--gold);color:var(--navy);}
+.vs-item.done .vs-num{background:var(--green);color:var(--white);}
+.vs-sep{flex:1;height:1px;background:var(--gray-200);margin:0 8px;}
+.vs-sep.done{background:var(--green);}
+
+.v-models{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+.vm-card{border:2px solid var(--gray-200);border-radius:var(--r-lg);padding:14px;cursor:pointer;transition:var(--tr);background:var(--gray-50);}
+.vm-card:hover{border-color:var(--gold-dim);transform:translateY(-1px);}
+.vm-card.sel{border-color:var(--navy);background:var(--white);box-shadow:var(--sh-md);}
+.vm-prev{height:60px;background:var(--navy);border-radius:var(--r-sm);margin-bottom:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.vm-name{font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px;}
+.vm-price{font-size:11px;color:var(--gray-400);font-weight:300;}
+.vm-sel-badge{display:inline-block;margin-top:6px;font-size:9px;background:var(--gold-light);color:#b8840a;padding:2px 8px;border-radius:10px;font-weight:700;}
+
+.v-form{background:var(--white);border-radius:var(--r-lg);border:1px solid var(--gray-200);overflow:hidden;margin-bottom:14px;}
+.vf-head{padding:13px 16px;border-bottom:1px solid var(--gray-100);display:flex;align-items:center;gap:8px;}
+.vf-title{font-size:11px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:1px;}
+.vf-body{padding:14px 16px;}
+.vf-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--gray-100);}
+.vf-row:last-of-type{border-bottom:none;}
+.vk{font-size:10px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.5px;}
+.vv{font-size:12px;font-weight:400;color:var(--gray-800);}
+.vv-edit{font-size:12px;font-weight:600;color:var(--gold);cursor:pointer;}
+
+.check-row{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--navy);border-radius:var(--r-sm);margin:14px 0 0;}
+.check-lbl{font-size:12px;font-weight:600;color:var(--white);flex:1;}
+.checkmark{width:20px;height:20px;background:var(--gold);border-radius:4px;display:flex;align-items:center;justify-content:center;}
+
+.order-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;background:var(--gold);border-radius:var(--r-sm);font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;cursor:pointer;border:none;font-family:var(--font);margin-top:12px;transition:var(--tr);box-shadow:0 2px 8px rgba(232,177,48,.3);}
+.order-btn:hover{background:var(--gold-dim);transform:translateY(-1px);}
+
+.v2-banner{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--gray-50);border:1px dashed var(--gray-200);border-radius:var(--r-sm);margin-top:10px;}
+.v2-b{font-size:9px;padding:2px 8px;background:var(--gray-200);color:var(--gray-600);border-radius:10px;font-weight:700;flex-shrink:0;}
+.v2-t{font-size:11px;font-weight:300;color:var(--gray-400);}
+
+/* UPLOAD ZONE */
+.upload-zone{border:2px dashed var(--gray-200);border-radius:var(--r-lg);padding:28px;text-align:center;cursor:pointer;transition:var(--tr);margin-top:14px;}
+.upload-zone:hover{border-color:var(--gold);background:var(--gold-light);}
+.uz-icon{width:48px;height:48px;background:var(--gray-100);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;}
+.uz-title{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:4px;}
+.uz-sub{font-size:11px;font-weight:300;color:var(--gray-400);}
+
+/* STAT CARDS */
+.stats-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:18px;}
+.stat-card{background:var(--white);border-radius:var(--r-lg);border:1px solid var(--gray-200);padding:16px;box-shadow:var(--sh-sm);}
+.stat-label{font-size:10px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.stat-val{font-size:26px;font-weight:700;color:var(--navy);line-height:1;}
+.stat-sub{font-size:11px;font-weight:300;color:var(--gray-400);margin-top:4px;}
+.stat-accent{color:var(--gold);}
+</style>
+
+<div style="font-family:'Readex Pro',sans-serif;">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="logo-wrap">
+    <svg width="108" height="34" viewBox="0 0 108 34" fill="none">
+      <text x="0" y="15" font-family="'Readex Pro',sans-serif" font-weight="700" font-size="13" fill="white" letter-spacing="2">ATELIER</text>
+      <text x="0" y="31" font-family="'Readex Pro',sans-serif" font-weight="700" font-size="13" fill="#E8B130" letter-spacing="2">GAMBETTA</text>
+    </svg>
+    <div class="logo-sep"></div>
+    <span class="logo-sub">Espace client</span>
+  </div>
+  <div class="tb-right">
+    <div class="tb-btn" onclick="toggleNotifs()">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" stroke="rgba(255,255,255,.65)" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <div class="tb-badge-notif">3</div>
+    </div>
+    <div class="tb-av">BC</div>
+  </div>
+</div>
+
+<div class="shell">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="client-card">
+    <div class="cc-tag">Client</div>
+    <div class="cc-name">Boulangerie Crespin</div>
+    <div class="cc-loc">
+      <svg width="10" height="10" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="10" r="3" stroke="rgba(255,255,255,.4)" stroke-width="2"/><path d="M12 21C12 21 5 15.5 5 10a7 7 0 0114 0c0 5.5-7 11-7 11z" stroke="rgba(255,255,255,.4)" stroke-width="2"/></svg>
+      75011 Paris
+    </div>
+  </div>
+  <div class="nav-section">Navigation</div>
+  <div class="nav-item active" id="nav-home" onclick="goTo('home')">
+    <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="#E8B130" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke="#E8B130" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="#E8B130" stroke-width="1.8"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="#E8B130" stroke-width="1.8"/></svg>
+    Tableau de bord
+  </div>
+  <div class="nav-item" id="nav-sav" onclick="goTo('sav')">
+    <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" stroke="rgba(255,255,255,.45)" stroke-width="1.8" stroke-linecap="round"/></svg>
+    Tickets SAV
+    <span class="nav-badge">1</span>
+  </div>
+  <div class="nav-item" id="nav-coffre" onclick="goTo('coffre')">
+    <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" stroke="rgba(255,255,255,.45)" stroke-width="1.8"/></svg>
+    Coffre-fort
+  </div>
+  <div class="nav-item" id="nav-vitro" onclick="goTo('vitro')">
+    <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0" stroke="rgba(255,255,255,.45)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Vitrophanie
+  </div>
+  <div class="sidebar-footer">
+    <div class="sf-label">Version 1.0</div>
+    <div class="sf-text">Fonctionnalités essentielles uniquement</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- ══════════════════ PAGE HOME ══════════════════ -->
+<div class="page active" id="page-home">
+  <div class="ph">
+    <div><div class="ph-greeting">Bienvenue</div><div class="ph-title">Boulangerie Crespin</div></div>
+    <div class="ph-right">Jeudi 16 avril 2026</div>
+  </div>
+
+  <!-- NOTIF DRAWER -->
+  <div class="nd" id="notif-drawer" style="display:none;">
+    <div class="nd-head">
+      <div class="nd-title"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>Notifications<span class="nd-cnt">3 nouvelles</span></div>
+      <span class="nd-close" onclick="toggleNotifs()">Fermer ✕</span>
+    </div>
+    <div class="nd-item unread">
+      <div class="nd-ico ndi-g"><svg width="18" height="18" fill="none" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="2" stroke="#b8840a" stroke-width="1.8"/><path d="M16 8h4l3 3v5h-7V8z" stroke="#b8840a" stroke-width="1.8"/></svg></div>
+      <div class="nd-body"><div class="nd-t">Votre enseigne entre en fabrication</div><div class="nd-d">Commande #2024-1147 — livraison estimée le 8 janvier</div><div class="nd-time">Il y a 2h</div></div>
+      <div class="nd-dot"></div>
+    </div>
+    <div class="nd-item unread">
+      <div class="nd-ico ndi-n"><svg width="18" height="18" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="10" r="3" stroke="#224761" stroke-width="1.8"/><path d="M12 21C12 21 5 15 5 10a7 7 0 0114 0c0 5-7 11-7 11z" stroke="#224761" stroke-width="1.8"/></svg></div>
+      <div class="nd-body"><div class="nd-t">Technicien Romain prévu mercredi</div><div class="nd-d">Ticket #SAV-041 — créneau 9h–12h, le 15 janvier</div><div class="nd-time">Hier à 16h22</div></div>
+      <div class="nd-dot"></div>
+    </div>
+    <div class="nd-item unread">
+      <div class="nd-ico ndi-g"><svg width="18" height="18" fill="none" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#b8840a" stroke-width="1.8"/><line x1="3" y1="10" x2="21" y2="10" stroke="#b8840a" stroke-width="1.8"/></svg></div>
+      <div class="nd-body"><div class="nd-t">Soldes d'hiver — commandez avant le 15 jan.</div><div class="nd-d">Vitrophanie adaptée boulangerie — pose incluse</div><div class="nd-time">3 janv. à 09h00</div></div>
+      <div class="nd-dot"></div>
+    </div>
+    <div class="nd-item">
+      <div class="nd-ico ndi-gr"><svg width="18" height="18" fill="none" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="#0f8047" stroke-width="2.2" stroke-linecap="round"/></svg></div>
+      <div class="nd-body"><div class="nd-t">Ticket #SAV-038 résolu</div><div class="nd-d">Remplacement néon entrée — bon signé le 28 déc.</div><div class="nd-time">28 déc. à 14h10</div></div>
+    </div>
+  </div>
+
+  <!-- LIVE TRACK -->
+  <div class="track-card">
+    <div class="tc-top">
+      <div class="tc-label"><div class="live-dot"></div>Suivi en temps réel<span class="live-pill">Live</span></div>
+      <div class="tc-ref">Commande #2024-1147 · Enseigne lumineuse façade</div>
+    </div>
+    <div class="steps">
+      <div class="step done"><div class="step-conn"></div><div class="step-circle"><svg width="15" height="15" fill="none" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="#1db368" stroke-width="2.5" stroke-linecap="round"/></svg></div><div class="step-label">Devis signé</div></div>
+      <div class="step done"><div class="step-conn"></div><div class="step-circle"><svg width="15" height="15" fill="none" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="#1db368" stroke-width="2.5" stroke-linecap="round"/></svg></div><div class="step-label">BAT validé</div></div>
+      <div class="step active"><div class="step-conn"></div><div class="step-circle"><svg width="10" height="10" fill="#224761" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4"/></svg></div><div class="step-label">En fabrication</div></div>
+      <div class="step"><div class="step-circle" style="font-size:13px;font-weight:600;color:rgba(255,255,255,.2);">4</div><div class="step-label">Pose programmée</div></div>
+    </div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="sl">Actions rapides</div>
+  <div class="qa-grid">
+    <div class="qa-card qa-p" onclick="goTo('sav')">
+      <div class="qa-icon qai-g"><svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="#224761" stroke-width="2.2"/><line x1="12" y1="9" x2="12" y2="13" stroke="#224761" stroke-width="2.2"/><circle cx="12" cy="17" r="1" fill="#224761"/></svg></div>
+      <div style="flex:1;"><div class="qa-lp">Signaler une panne</div><div class="qa-dp">Diagnostic guidé en 3 clics — devis automatique</div></div>
+      <div style="font-size:18px;color:var(--gold);align-self:center;">›</div>
+    </div>
+    <div class="qa-card qa-s" onclick="goTo('vitro')">
+      <div class="qa-icon qai-l"><svg width="20" height="20" fill="none" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#224761" stroke-width="2"/><line x1="3" y1="9" x2="21" y2="9" stroke="#224761" stroke-width="2"/><line x1="3" y1="15" x2="21" y2="15" stroke="#224761" stroke-width="2"/></svg></div>
+      <div style="flex:1;"><div class="qa-ls">Commander vitrophanie</div><div class="qa-ds">Modèles pré-adaptés, pose incluse</div></div>
+      <div style="font-size:18px;color:var(--navy);align-self:center;">›</div>
+    </div>
+  </div>
+
+  <!-- SAV APERCU -->
+  <div class="sl">SAV & Interventions</div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-head"><div class="ch-icon chi-r"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="ch-title">Mes tickets</div><div class="ch-meta" style="cursor:pointer;color:var(--gold);" onclick="goTo('sav')">Voir tout ›</div></div>
+      <div class="card-body">
+        <div style="display:flex;flex-direction:column;gap:7px;">
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 11px;background:var(--gray-50);border-radius:var(--r-sm);border-left:3px solid var(--gold);"><div style="font-size:10px;color:var(--gray-400);font-weight:600;min-width:65px;font-family:monospace;">#SAV-041</div><div style="font-size:12px;font-weight:400;flex:1;">Clignotement LED côté droit</div><span class="badge b-orange">En cours</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 11px;background:var(--gray-50);border-radius:var(--r-sm);border-left:3px solid var(--green);"><div style="font-size:10px;color:var(--gray-400);font-weight:600;min-width:65px;font-family:monospace;">#SAV-038</div><div style="font-size:12px;font-weight:400;flex:1;">Remplacement néon entrée</div><span class="badge b-green">Résolu</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 11px;background:var(--gray-50);border-radius:var(--r-sm);border-left:3px solid var(--green);"><div style="font-size:10px;color:var(--gray-400);font-weight:600;min-width:65px;font-family:monospace;">#SAV-031</div><div style="font-size:12px;font-weight:400;flex:1;">Store banne — mécanisme</div><span class="badge b-green">Résolu</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="ch-icon chi-n"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="2" stroke="white" stroke-width="1.8"/><path d="M16 8h4l3 3v5h-7V8zM16 16h7" stroke="white" stroke-width="1.8"/></svg></div><div class="ch-title">Prochaine intervention</div></div>
+      <div class="card-body">
+        <div style="background:var(--gray-50);border-radius:var(--r-sm);padding:10px 12px;margin-bottom:8px;"><div style="font-size:9px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Technicien assigné</div><div style="font-size:13px;font-weight:600;color:var(--gray-800);">Romain D.</div><div style="font-size:11px;font-weight:300;color:var(--gray-600);margin-top:2px;">Poseur confirmé · Paris Est</div></div>
+        <div style="background:var(--gray-50);border-radius:var(--r-sm);padding:10px 12px;"><div style="font-size:9px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Créneau confirmé</div><div style="font-size:13px;font-weight:600;color:var(--gray-800);">Mer. 15 jan. — 9h00 à 12h00</div></div>
+        <button class="geo-btn"><div class="geo-live"></div>Voir le camion en direct</button>
+        <button class="sign-btn"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z" stroke="#224761" stroke-width="1.8"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" stroke="#224761" stroke-width="1.8"/></svg>Signer le bon d'intervention</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALENDRIER -->
+  <div class="sl">Calendrier <span class="sl-tag">Adapté boulangerie</span></div>
+  <div class="card">
+    <div class="card-head"><div class="ch-icon chi-g"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#224761" stroke-width="1.8"/><line x1="3" y1="10" x2="21" y2="10" stroke="#224761" stroke-width="1.8"/><line x1="8" y1="2" x2="8" y2="6" stroke="#224761" stroke-width="1.8"/><line x1="16" y1="2" x2="16" y2="6" stroke="#224761" stroke-width="1.8"/></svg></div><div class="ch-title">Prochains temps forts</div><div class="ch-meta">Dates limites de commande</div></div>
+    <div class="card-body">
+      <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;">
+        <div style="flex-shrink:0;min-width:84px;background:var(--navy);border:1.5px solid var(--gold);border-radius:var(--r-md);padding:11px 12px;text-align:center;cursor:pointer;">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.4);">Jan</div>
+          <div style="font-size:24px;font-weight:700;color:var(--gold);line-height:1.1;margin:2px 0;">15</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.6);">Soldes d'hiver</div>
+          <div style="font-size:9px;color:var(--gold-dim);margin-top:3px;font-weight:700;">Limite J-12</div>
+        </div>
+        <div style="flex-shrink:0;min-width:84px;background:var(--gray-50);border:1.5px solid var(--gray-200);border-radius:var(--r-md);padding:11px 12px;text-align:center;cursor:pointer;">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-400);">Fév</div>
+          <div style="font-size:24px;font-weight:700;color:var(--navy);line-height:1.1;margin:2px 0;">2</div>
+          <div style="font-size:10px;color:var(--gray-600);">Chandeleur</div>
+          <div style="font-size:9px;color:var(--red);margin-top:3px;font-weight:700;">Limite J-10</div>
+        </div>
+        <div style="flex-shrink:0;min-width:84px;background:var(--gray-50);border:1.5px solid var(--gray-200);border-radius:var(--r-md);padding:11px 12px;text-align:center;cursor:pointer;">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-400);">Mar</div>
+          <div style="font-size:24px;font-weight:700;color:var(--navy);line-height:1.1;margin:2px 0;">30</div>
+          <div style="font-size:10px;color:var(--gray-600);">Pâques</div>
+          <div style="font-size:9px;color:var(--red);margin-top:3px;font-weight:700;">Limite J-14</div>
+        </div>
+        <div style="flex-shrink:0;min-width:84px;background:var(--gray-50);border:1.5px solid var(--gray-200);border-radius:var(--r-md);padding:11px 12px;text-align:center;cursor:pointer;">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-400);">Mai</div>
+          <div style="font-size:24px;font-weight:700;color:var(--navy);line-height:1.1;margin:2px 0;">26</div>
+          <div style="font-size:10px;color:var(--gray-600);">Fête des mères</div>
+          <div style="font-size:9px;color:var(--red);margin-top:3px;font-weight:700;">Limite J-10</div>
+        </div>
+        <div style="flex-shrink:0;min-width:84px;background:var(--gray-50);border:1.5px solid var(--gray-200);border-radius:var(--r-md);padding:11px 12px;text-align:center;cursor:pointer;">
+          <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-400);">Juin</div>
+          <div style="font-size:24px;font-weight:700;color:var(--navy);line-height:1.1;margin:2px 0;">25</div>
+          <div style="font-size:10px;color:var(--gray-600);">Soldes d'été</div>
+          <div style="font-size:9px;color:var(--red);margin-top:3px;font-weight:700;">Limite J-12</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ PAGE SAV ══════════════════ -->
+<div class="page" id="page-sav">
+  <div class="ph">
+    <div><div class="ph-greeting">Module</div><div class="ph-title">SAV & Interventions</div></div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <button onclick="openDiag()" style="display:flex;align-items:center;gap:7px;padding:10px 16px;background:var(--red);border-radius:var(--r-sm);font-size:11px;font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:.5px;cursor:pointer;border:none;font-family:var(--font);">
+        <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
+        Signaler une panne
+      </button>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-label">Tickets ouverts</div><div class="stat-val" style="color:var(--gold);">1</div><div class="stat-sub">2 résolus ce mois</div></div>
+    <div class="stat-card"><div class="stat-label">Délai moyen résolution</div><div class="stat-val">48h</div><div class="stat-sub">Objectif contrat : 72h</div></div>
+    <div class="stat-card"><div class="stat-label">Prochaine intervention</div><div class="stat-val" style="font-size:18px;">15 jan.</div><div class="stat-sub">Romain D. · 9h–12h</div></div>
+  </div>
+
+  <!-- MODAL DIAGNOSTIC -->
+  <div id="diag-modal" style="display:none;background:rgba(34,71,97,.5);border-radius:var(--r-lg);padding:24px;margin-bottom:18px;">
+    <div style="background:var(--white);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-lg);max-width:520px;margin:0 auto;">
+      <div style="background:var(--navy);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="font-size:14px;font-weight:700;color:var(--white);">Diagnostic en 3 clics</div>
+        <div onclick="closeDiag()" style="font-size:12px;color:rgba(255,255,255,.4);cursor:pointer;font-weight:600;">Fermer ✕</div>
+      </div>
+      <div style="padding:20px;">
+        <div style="display:flex;gap:4px;margin-bottom:16px;" id="diag-progress">
+          <div style="flex:1;height:4px;border-radius:2px;background:var(--gold);"></div>
+          <div style="flex:1;height:4px;border-radius:2px;background:var(--gray-200);"></div>
+          <div style="flex:1;height:4px;border-radius:2px;background:var(--gray-200);"></div>
+        </div>
+        <div id="diag-step1">
+          <div style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:4px;">Êtes-vous déjà client Atelier Gambetta ?</div>
+          <div style="font-size:11px;color:var(--gray-400);margin-bottom:16px;">Cela nous permettra de pré-remplir vos informations</div>
+          <div style="display:flex;gap:10px;">
+            <button onclick="diagNext()" style="flex:1;padding:12px;background:var(--navy);border-radius:var(--r-sm);font-size:12px;font-weight:700;color:var(--white);cursor:pointer;border:none;font-family:var(--font);">Oui, je suis client</button>
+            <button onclick="diagNext()" style="flex:1;padding:12px;background:var(--gray-50);border:1.5px solid var(--gray-200);border-radius:var(--r-sm);font-size:12px;font-weight:700;color:var(--navy);cursor:pointer;font-family:var(--font);">Non, nouveau client</button>
+          </div>
+        </div>
+        <div id="diag-step2" style="display:none;">
+          <div style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:16px;">Quel est le problème constaté ?</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <button onclick="diagNext()" style="padding:12px;background:var(--gray-50);border:1.5px solid var(--gray-200);border-radius:var(--r-md);font-size:12px;font-weight:600;color:var(--navy);cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:8px;"><svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="#224761" stroke-width="1.8"/><line x1="12" y1="8" x2="12" y2="12" stroke="#224761" stroke-width="2"/><circle cx="12" cy="16" r="1" fill="#224761"/></svg>Extinction totale</button>
+            <button onclick="diagNext()" style="padding:12px;background:var(--gray-50);border:1.5px solid var(--gray-200);border-radius:var(--r-md);font-size:12px;font-weight:600;color:var(--navy);cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:8px;"><svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#224761" stroke-width="1.8" stroke-linecap="round"/></svg>Clignotement</button>
+            <button onclick="diagNext()" style="padding:12px;background:var(--gold-light);border:1.5px solid var(--gold-dim);border-radius:var(--r-md);font-size:12px;font-weight:600;color:#b8840a;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:8px;"><svg width="16" height="16" fill="none" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#b8840a" stroke-width="1.8"/><line x1="3" y1="12" x2="21" y2="12" stroke="#b8840a" stroke-width="1.8"/></svg>Partiellement éteinte</button>
+            <button onclick="diagNext()" style="padding:12px;background:var(--gray-50);border:1.5px solid var(--gray-200);border-radius:var(--r-md);font-size:12px;font-weight:600;color:var(--navy);cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:8px;"><svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="#224761" stroke-width="1.8"/><line x1="9" y1="9" x2="15" y2="15" stroke="#224761" stroke-width="2"/><line x1="15" y1="9" x2="9" y2="15" stroke="#224761" stroke-width="2"/></svg>Autre problème</button>
+          </div>
+        </div>
+        <div id="diag-step3" style="display:none;">
+          <div style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:4px;">Ajoutez une photo (optionnel)</div>
+          <div style="font-size:11px;color:var(--gray-400);margin-bottom:12px;">Aide le technicien à préparer l'intervention</div>
+          <div style="border:2px dashed var(--gray-200);border-radius:var(--r-md);padding:20px;text-align:center;cursor:pointer;margin-bottom:14px;" onclick="diagSubmit()">
+            <svg width="28" height="28" fill="none" viewBox="0 0 24 24" style="margin:0 auto 8px;display:block;"><rect x="3" y="3" width="18" height="18" rx="3" stroke="#A8A5A0" stroke-width="1.8"/><circle cx="8.5" cy="8.5" r="1.5" fill="#A8A5A0"/><polyline points="21 15 16 10 5 21" stroke="#A8A5A0" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <div style="font-size:12px;font-weight:600;color:var(--gray-400);">Cliquer pour uploader</div>
+            <div style="font-size:10px;color:var(--gray-400);font-weight:300;margin-top:3px;">JPG, PNG, MP4 — max 50 MB</div>
+          </div>
+          <button onclick="diagSubmit()" style="width:100%;padding:12px;background:var(--gold);border-radius:var(--r-sm);font-size:12px;font-weight:700;color:var(--navy);cursor:pointer;border:none;font-family:var(--font);">Envoyer le diagnostic — obtenir un devis</button>
+        </div>
+        <div id="diag-done" style="display:none;text-align:center;padding:10px 0;">
+          <div style="width:52px;height:52px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><svg width="24" height="24" fill="none" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+          <div style="font-size:15px;font-weight:700;color:var(--navy);margin-bottom:6px;">Ticket #SAV-042 créé</div>
+          <div style="font-size:12px;font-weight:300;color:var(--gray-600);line-height:1.5;">Un technicien vous contactera sous 15 min.<br>Un devis automatique a été généré.</div>
+          <button onclick="closeDiag()" style="margin-top:16px;padding:10px 24px;background:var(--navy);border-radius:var(--r-sm);font-size:11px;font-weight:700;color:white;cursor:pointer;border:none;font-family:var(--font);">Voir mes tickets</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TICKET LIST -->
+  <div class="sl">Tous les tickets</div>
+  <div class="ticket-full">
+    <div class="ticket-card">
+      <div class="tc-head">
+        <div class="tc-stripe ts-orange"></div>
+        <div class="tc-info">
+          <div class="tc-num">#SAV-041</div>
+          <div class="tc-title">Clignotement LED côté droit — Façade principale</div>
+          <div class="tc-meta"><span class="badge b-orange">En cours</span><span class="tc-tag">Ouvert le 2 jan. 2025</span><span class="tc-tag">· Technicien : Romain D.</span></div>
+        </div>
+        <div class="tc-right"><span class="badge b-navy">Sous garantie</span><div style="font-size:11px;color:var(--gray-400);font-weight:300;">15 jan. 9h–12h</div></div>
+      </div>
+      <div style="padding:0 16px 14px 16px;display:flex;gap:8px;">
+        <button class="geo-btn" style="margin-top:0;flex:1;"><div class="geo-live"></div>Camion en direct</button>
+        <button class="sign-btn" style="margin-top:0;flex:1;border:1.5px solid var(--gray-200);"><svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z" stroke="#224761" stroke-width="1.8"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" stroke="#224761" stroke-width="1.8"/></svg>Signer le bon</button>
+      </div>
+    </div>
+    <div class="ticket-card" style="opacity:.85;">
+      <div class="tc-head">
+        <div class="tc-stripe ts-green"></div>
+        <div class="tc-info">
+          <div class="tc-num">#SAV-038</div>
+          <div class="tc-title">Remplacement néon entrée — Côté gauche</div>
+          <div class="tc-meta"><span class="badge b-green">Résolu</span><span class="tc-tag">Résolu le 28 déc. 2024</span><span class="tc-tag">· Technicien : Matéo B.</span></div>
+        </div>
+        <div class="tc-right"><span class="badge b-gray">Bon signé</span><div style="font-size:11px;color:var(--gray-400);font-weight:300;">Durée : 2h15</div></div>
+      </div>
+    </div>
+    <div class="ticket-card" style="opacity:.85;">
+      <div class="tc-head">
+        <div class="tc-stripe ts-green"></div>
+        <div class="tc-info">
+          <div class="tc-num">#SAV-031</div>
+          <div class="tc-title">Store banne — mécanisme d'enroulement bloqué</div>
+          <div class="tc-meta"><span class="badge b-green">Résolu</span><span class="tc-tag">Résolu le 14 nov. 2024</span><span class="tc-tag">· Technicien : Romain D.</span></div>
+        </div>
+        <div class="tc-right"><span class="badge b-gray">Bon signé</span><div style="font-size:11px;color:var(--gray-400);font-weight:300;">Durée : 1h30</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ PAGE COFFRE-FORT ══════════════════ -->
+<div class="page" id="page-coffre">
+  <div class="ph">
+    <div><div class="ph-greeting">Module</div><div class="ph-title">Coffre-fort numérique</div></div>
+    <button style="display:flex;align-items:center;gap:7px;padding:10px 16px;background:var(--navy);border-radius:var(--r-sm);font-size:11px;font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:.5px;cursor:pointer;border:none;font-family:var(--font);">
+      <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
+      Uploader un fichier
+    </button>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-label">Total fichiers</div><div class="stat-val">9</div><div class="stat-sub">3 ajoutés ce mois</div></div>
+    <div class="stat-card"><div class="stat-label">Espace utilisé</div><div class="stat-val" style="font-size:20px;">12.4 MB</div><div class="stat-sub">sur 500 MB alloués</div></div>
+    <div class="stat-card"><div class="stat-label">Dernière mise à jour</div><div class="stat-val" style="font-size:18px;">8 jan.</div><div class="stat-sub">Facture #2024-1147</div></div>
+  </div>
+
+  <!-- TABS -->
+  <div class="cf-tabs">
+    <div class="cf-tab active" onclick="setCfTab(this,'all')">Tous</div>
+    <div class="cf-tab" onclick="setCfTab(this,'logos')">Identité</div>
+    <div class="cf-tab" onclick="setCfTab(this,'plans')">Plans & Techniques</div>
+    <div class="cf-tab" onclick="setCfTab(this,'factures')">Factures</div>
+  </div>
+
+  <div class="cf-search">
+    <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="#A8A5A0" stroke-width="1.8"/><line x1="16.5" y1="16.5" x2="21" y2="21" stroke="#A8A5A0" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <input type="text" placeholder="Rechercher un document…">
+  </div>
+
+  <div class="doc-grid">
+    <div class="doc-card">
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <div class="dc-ico dc-ico-img"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3" stroke="#185FA5" stroke-width="1.8"/><circle cx="8.5" cy="8.5" r="1.5" fill="#185FA5"/><polyline points="21 15 16 10 5 21" stroke="#185FA5" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <div><div class="dc-name">Logo HD — Boulangerie Crespin</div><div class="dc-meta">PNG · Identité visuelle</div></div>
+      </div>
+      <div class="dc-foot"><span class="dc-tag">Identité</span><div style="display:flex;align-items:center;gap:8px;"><span class="dc-size">2.4 MB</span><span class="dc-dl">↓ Télécharger</span></div></div>
+    </div>
+    <div class="doc-card">
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <div class="dc-ico dc-ico-doc"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="#b8840a" stroke-width="1.8"/><polyline points="14 2 14 8 20 8" stroke="#b8840a" stroke-width="1.8"/></svg></div>
+        <div><div class="dc-name">Charte graphique 2024</div><div class="dc-meta">PDF · Identité visuelle</div></div>
+      </div>
+      <div class="dc-foot"><span class="dc-tag">Identité</span><div style="display:flex;align-items:center;gap:8px;"><span class="dc-size">4.2 MB</span><span class="dc-dl">↓ Télécharger</span></div></div>
+    </div>
+    <div class="doc-card">
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <div class="dc-ico dc-ico-pdf"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="var(--red)" stroke-width="1.8"/><polyline points="14 2 14 8 20 8" stroke="var(--red)" stroke-width="1.8"/><line x1="8" y1="13" x2="16" y2="13" stroke="var(--red)" stroke-width="1.5"/><line x1="8" y1="17" x2="16" y2="17" stroke="var(--red)" stroke-width="1.5"/></svg></div>
+        <div><div class="dc-name">Plan d'exécution enseigne — Façade</div><div class="dc-meta">PDF · Plan technique</div></div>
+      </div>
+      <div class="dc-foot"><span class="dc-tag">Plans</span><div style="display:flex;align-items:center;gap:8px;"><span class="dc-size">1.1 MB</span><span class="dc-dl">↓ Télécharger</span></div></div>
+    </div>
+    <div class="doc-card">
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <div class="dc-ico dc-ico-pdf"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="var(--red)" stroke-width="1.8"/><polyline points="14 2 14 8 20 8" stroke="var(--red)" stroke-width="1.8"/><line x1="8" y1="13" x2="16" y2="13" stroke="var(--red)" stroke-width="1.5"/><line x1="8" y1="17" x2="16" y2="17" stroke="var(--red)" stroke-width="1.5"/></svg></div>
+        <div><div class="dc-name">Schéma électrique — Enseigne LED</div><div class="dc-meta">PDF · Plan technique · v2</div></div>
+      </div>
+      <div class="dc-foot"><span class="dc-tag">Plans</span><div style="display:flex;align-items:center;gap:8px;"><span class="dc-size">890 KB</span><span class="dc-dl">↓ Télécharger</span></div></div>
+    </div>
+    <div class="doc-card">
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <div class="dc-ico dc-ico-pdf"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="var(--red)" stroke-width="1.8"/><polyline points="14 2 14 8 20 8" stroke="var(--red)" stroke-width="1.8"/></svg></div>
+        <div><div class="dc-name">Facture #2024-1147</div><div class="dc-meta">PDF · Facture · janv. 2025</div></div>
+      </div>
+      <div class="dc-foot"><span class="dc-tag">Factures</span><div style="display:flex;align-items:center;gap:8px;"><span class="dc-size">280 KB</span><span class="dc-dl">↓ Télécharger</span></div></div>
+    </div>
+    <div class="doc-card">
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <div class="dc-ico dc-ico-pdf"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="var(--red)" stroke-width="1.8"/><polyline points="14 2 14 8 20 8" stroke="var(--red)" stroke-width="1.8"/></svg></div>
+        <div><div class="dc-name">Devis #2024-1147</div><div class="dc-meta">PDF · Devis · nov. 2024</div></div>
+      </div>
+      <div class="dc-foot"><span class="dc-tag">Factures</span><div style="display:flex;align-items:center;gap:8px;"><span class="dc-size">195 KB</span><span class="dc-dl">↓ Télécharger</span></div></div>
+    </div>
+    <div class="doc-card">
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <div class="dc-ico dc-ico-img"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3" stroke="#185FA5" stroke-width="1.8"/><circle cx="8.5" cy="8.5" r="1.5" fill="#185FA5"/><polyline points="21 15 16 10 5 21" stroke="#185FA5" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <div><div class="dc-name">Photo avant pose — Façade</div><div class="dc-meta">JPG · Photo chantier</div></div>
+      </div>
+      <div class="dc-foot"><span class="dc-tag">Photos</span><div style="display:flex;align-items:center;gap:8px;"><span class="dc-size">3.1 MB</span><span class="dc-dl">↓ Télécharger</span></div></div>
+    </div>
+    <div class="doc-card">
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <div class="dc-ico dc-ico-img"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3" stroke="#185FA5" stroke-width="1.8"/><circle cx="8.5" cy="8.5" r="1.5" fill="#185FA5"/><polyline points="21 15 16 10 5 21" stroke="#185FA5" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <div><div class="dc-name">Photo après pose — Façade</div><div class="dc-meta">JPG · Photo chantier</div></div>
+      </div>
+      <div class="dc-foot"><span class="dc-tag">Photos</span><div style="display:flex;align-items:center;gap:8px;"><span class="dc-size">2.8 MB</span><span class="dc-dl">↓ Télécharger</span></div></div>
+    </div>
+  </div>
+
+  <div style="border:2px dashed var(--gray-200);border-radius:var(--r-lg);padding:28px;text-align:center;cursor:pointer;transition:var(--tr);margin-top:4px;" onmouseover="this.style.borderColor='var(--gold)';this.style.background='#fffdf5'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.background='transparent'">
+    <div style="width:48px;height:48px;background:var(--gray-100);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;"><svg width="20" height="20" fill="none" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19" stroke="#A8A5A0" stroke-width="2.5" stroke-linecap="round"/><line x1="5" y1="12" x2="19" y2="12" stroke="#A8A5A0" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+    <div style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:4px;">Uploader un nouveau fichier</div>
+    <div style="font-size:11px;font-weight:300;color:var(--gray-400);">PDF, PNG, JPG, AI, SVG — max 50 MB</div>
+  </div>
+</div>
+
+<!-- ══════════════════ PAGE VITROPHANIE ══════════════════ -->
+<div class="page" id="page-vitro">
+  <div class="ph">
+    <div><div class="ph-greeting">Module</div><div class="ph-title">Commander une vitrophanie</div></div>
+    <div class="ph-right">Site : Boulangerie Crespin — 75011</div>
+  </div>
+
+  <!-- STEPPER -->
+  <div class="vitro-steps" style="margin-bottom:22px;">
+    <div class="vs-item active" id="vstep-1"><div class="vs-num">1</div>Modèle</div>
+    <div class="vs-sep" id="vsep-1"></div>
+    <div class="vs-item" id="vstep-2"><div class="vs-num">2</div>Dimensions</div>
+    <div class="vs-sep" id="vsep-2"></div>
+    <div class="vs-item" id="vstep-3"><div class="vs-num">3</div>Confirmation</div>
+  </div>
+
+  <!-- STEP 1 : CHOIX MODÈLE -->
+  <div id="vs1">
+    <div class="sl">Choisissez votre modèle</div>
+    <div class="v-models">
+      <div class="vm-card sel" onclick="selectModel(this)">
+        <div class="vm-prev">
+          <svg width="70" height="28" fill="none" viewBox="0 0 70 28"><rect x="0" y="5" width="70" height="18" rx="3" fill="#E8B130" opacity=".2"/><text x="35" y="19" text-anchor="middle" fill="#E8B130" font-size="11" font-weight="700" font-family="sans-serif">SOLDES</text></svg>
+        </div>
+        <div class="vm-name">Soldes standard</div>
+        <div class="vm-price">à partir de 89€ HT</div>
+        <div class="vm-sel-badge">Sélectionné</div>
+      </div>
+      <div class="vm-card" onclick="selectModel(this)">
+        <div class="vm-prev">
+          <svg width="70" height="28" fill="none" viewBox="0 0 70 28"><rect x="0" y="5" width="70" height="18" rx="3" fill="#C83E3F" opacity=".2"/><text x="35" y="19" text-anchor="middle" fill="#C83E3F" font-size="10" font-weight="700" font-family="sans-serif">PROMOTION</text></svg>
+        </div>
+        <div class="vm-name">Promotion saisonnière</div>
+        <div class="vm-price">à partir de 79€ HT</div>
+      </div>
+      <div class="vm-card" onclick="selectModel(this)">
+        <div class="vm-prev">
+          <svg width="70" height="28" fill="none" viewBox="0 0 70 28"><rect x="0" y="5" width="70" height="18" rx="3" fill="white" opacity=".08"/><text x="35" y="19" text-anchor="middle" fill="rgba(255,255,255,.5)" font-size="9" font-weight="700" font-family="sans-serif">SUR MESURE</text></svg>
+        </div>
+        <div class="vm-name">Sur mesure</div>
+        <div class="vm-price">Devis personnalisé</div>
+      </div>
+    </div>
+    <button onclick="vitroNext()" class="order-btn" style="max-width:320px;">Continuer — Choisir les dimensions ›</button>
+  </div>
+
+  <!-- STEP 2 : DIMENSIONS -->
+  <div id="vs2" style="display:none;">
+    <div class="v-form">
+      <div class="vf-head"><div class="ch-icon chi-n" style="width:24px;height:24px;"><svg width="12" height="12" fill="none" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" stroke="white" stroke-width="2"/></svg></div><div class="vf-title">Informations de la commande</div></div>
+      <div class="vf-body">
+        <div class="vf-row"><span class="vk">Site de pose</span><span class="vv">Boulangerie Crespin — 75011 Paris</span></div>
+        <div class="vf-row"><span class="vk">Modèle choisi</span><span class="vv">Soldes standard</span></div>
+        <div class="vf-row"><span class="vk">Largeur</span><span class="vv-edit">120 cm (modifier)</span></div>
+        <div class="vf-row"><span class="vk">Hauteur</span><span class="vv-edit">80 cm (modifier)</span></div>
+        <div class="vf-row"><span class="vk">Quantité</span><span class="vv-edit">1 exemplaire</span></div>
+        <div class="vf-row"><span class="vk">Texte personnalisé</span><span class="vv-edit">BOULANGERIE CRESPIN (modifier)</span></div>
+      </div>
+    </div>
+    <div class="check-row">
+      <span class="check-lbl">Pose incluse par défaut</span>
+      <div class="checkmark"><svg width="12" height="12" fill="none" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="#224761" stroke-width="3" stroke-linecap="round"/></svg></div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:12px;">
+      <button onclick="vitroBack()" style="flex:1;padding:12px;background:var(--white);border:1.5px solid var(--gray-200);border-radius:var(--r-sm);font-size:11px;font-weight:700;color:var(--navy);cursor:pointer;font-family:var(--font);">‹ Retour</button>
+      <button onclick="vitroNext()" class="order-btn" style="flex:2;margin-top:0;">Vérifier ma commande ›</button>
+    </div>
+  </div>
+
+  <!-- STEP 3 : CONFIRMATION -->
+  <div id="vs3" style="display:none;">
+    <div class="card">
+      <div class="card-head" style="background:#f9f7f3;"><div class="ch-icon chi-g"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="#224761" stroke-width="2.2" stroke-linecap="round"/></svg></div><div class="ch-title">Récapitulatif de commande</div></div>
+      <div class="card-body">
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--gray-100);"><span style="font-size:11px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.5px;">Modèle</span><span style="font-size:13px;font-weight:600;color:var(--gray-800);">Soldes standard</span></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--gray-100);"><span style="font-size:11px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.5px;">Dimensions</span><span style="font-size:13px;font-weight:600;color:var(--gray-800);">120 × 80 cm</span></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--gray-100);"><span style="font-size:11px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.5px;">Quantité</span><span style="font-size:13px;font-weight:600;color:var(--gray-800);">1 exemplaire</span></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--gray-100);"><span style="font-size:11px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.5px;">Pose incluse</span><span class="badge b-green">Oui</span></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--gray-100);"><span style="font-size:11px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:.5px;">Site de pose</span><span style="font-size:13px;font-weight:600;color:var(--gray-800);">75011 Paris</span></div>
+          <div style="display:flex;justify-content:space-between;padding:12px 0 0;"><span style="font-size:13px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;">Total estimé HT</span><span style="font-size:20px;font-weight:700;color:var(--gold);">89€</span></div>
+        </div>
+        <div style="margin-top:14px;padding:10px 12px;background:var(--gold-light);border-radius:var(--r-sm);border-left:3px solid var(--gold);">
+          <div style="font-size:11px;font-weight:600;color:#b8840a;">Date limite de commande</div>
+          <div style="font-size:12px;font-weight:300;color:#b8840a;margin-top:2px;">Pour Soldes d'hiver — commandez avant le <strong>15 janvier</strong></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:14px;">
+          <button onclick="vitroBack()" style="flex:1;padding:12px;background:var(--white);border:1.5px solid var(--gray-200);border-radius:var(--r-sm);font-size:11px;font-weight:700;color:var(--navy);cursor:pointer;font-family:var(--font);">‹ Modifier</button>
+          <button onclick="vitroConfirm()" class="order-btn" style="flex:2;margin-top:0;">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="#224761" stroke-width="2.5" stroke-linecap="round"/></svg>
+            Valider la commande
+          </button>
+        </div>
+        <div class="v2-banner"><span class="v2-b">V2</span><span class="v2-t">Re-commander en 1 clic, historique des commandes — prochaine version</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIRMATION FINALE -->
+  <div id="vs-done" style="display:none;text-align:center;padding:40px 20px;">
+    <div style="width:64px;height:64px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;"><svg width="28" height="28" fill="none" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+    <div style="font-size:20px;font-weight:700;color:var(--navy);margin-bottom:8px;">Commande confirmée !</div>
+    <div style="font-size:13px;font-weight:300;color:var(--gray-600);line-height:1.6;max-width:360px;margin:0 auto 24px;">Votre vitrophanie Soldes standard (120×80 cm) a été commandée.<br>Un chef de projet vous contactera pour confirmer la date de pose.</div>
+    <button onclick="vitroReset()" style="padding:12px 28px;background:var(--navy);border-radius:var(--r-sm);font-size:12px;font-weight:700;color:white;cursor:pointer;border:none;font-family:var(--font);">Retour au tableau de bord</button>
+  </div>
+</div>
+
+</div><!-- /main -->
+</div><!-- /shell -->
+</div>
+
+<script>
+// ── NAVIGATION ──
+function goTo(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.getElementById('nav-'+page).classList.add('active');
+  // Reset notif drawer
+  document.getElementById('notif-drawer').style.display='none';
+}
+
+// ── NOTIFICATIONS ──
+function toggleNotifs(){
+  const d=document.getElementById('notif-drawer');
+  d.style.display=d.style.display==='none'?'block':'none';
+}
+
+// ── DIAGNOSTIC SAV ──
+let diagStep=1;
+function openDiag(){
+  diagStep=1;
+  document.getElementById('diag-modal').style.display='block';
+  document.getElementById('diag-step1').style.display='block';
+  document.getElementById('diag-step2').style.display='none';
+  document.getElementById('diag-step3').style.display='none';
+  document.getElementById('diag-done').style.display='none';
+  updateDiagProgress();
+}
+function closeDiag(){document.getElementById('diag-modal').style.display='none';}
+function diagNext(){
+  diagStep++;
+  ['diag-step1','diag-step2','diag-step3','diag-done'].forEach((id,i)=>{
+    document.getElementById(id).style.display=(i===diagStep-1)?'block':'none';
+  });
+  updateDiagProgress();
+}
+function diagSubmit(){
+  diagStep=4;
+  ['diag-step1','diag-step2','diag-step3'].forEach(id=>document.getElementById(id).style.display='none');
+  document.getElementById('diag-done').style.display='block';
+  document.getElementById('diag-progress').innerHTML='<div style="flex:1;height:4px;border-radius:2px;background:var(--green);"></div><div style="flex:1;height:4px;border-radius:2px;background:var(--green);"></div><div style="flex:1;height:4px;border-radius:2px;background:var(--green);"></div>';
+}
+function updateDiagProgress(){
+  const steps=['<div style="flex:1;height:4px;border-radius:2px;background:var(--gold);"></div>','<div style="flex:1;height:4px;border-radius:2px;background:var(--gray-200);"></div>','<div style="flex:1;height:4px;border-radius:2px;background:var(--gray-200);"></div>'];
+  for(let i=0;i<diagStep-1;i++)steps[i]='<div style="flex:1;height:4px;border-radius:2px;background:var(--green);"></div>';
+  if(diagStep<=3)steps[diagStep-1]='<div style="flex:1;height:4px;border-radius:2px;background:var(--gold);"></div>';
+  document.getElementById('diag-progress').innerHTML=steps.join('');
+}
+
+// ── COFFRE-FORT TABS ──
+function setCfTab(el,tab){
+  document.querySelectorAll('.cf-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ── MODÈLE VITROPHANIE ──
+function selectModel(el){
+  document.querySelectorAll('.vm-card').forEach(c=>{c.classList.remove('sel');c.querySelector('.vm-sel-badge')&&c.querySelector('.vm-sel-badge').remove();});
+  el.classList.add('sel');
+  if(!el.querySelector('.vm-sel-badge')){const b=document.createElement('div');b.className='vm-sel-badge';b.textContent='Sélectionné';el.appendChild(b);}
+}
+
+// ── STEPPER VITROPHANIE ──
+let vitroStep=1;
+function vitroNext(){
+  setVitroStep(vitroStep+1);
+}
+function vitroBack(){
+  setVitroStep(vitroStep-1);
+}
+function setVitroStep(s){
+  vitroStep=s;
+  ['vs1','vs2','vs3','vs-done'].forEach((id,i)=>document.getElementById(id).style.display=(i===s-1)?'block':'none');
+  ['vstep-1','vstep-2','vstep-3'].forEach((id,i)=>{
+    const el=document.getElementById(id);
+    el.className='vs-item'+(i<s-1?' done':i===s-1?' active':'');
+  });
+  ['vsep-1','vsep-2'].forEach((id,i)=>{
+    document.getElementById(id).className='vs-sep'+(i<s-1?' done':'');
+  });
+}
+function vitroConfirm(){setVitroStep(4);}
+function vitroReset(){goTo('home');setVitroStep(1);}
+</script>
